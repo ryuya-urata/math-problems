@@ -1,7 +1,3 @@
-# 1. README.mdをindex.htmlにリネーム
-mv README.md index.html
-
-# 2. 本来のREADMEを作成（Markdown形式）
 echo "# 数学問題データベース
 
 AIを活用した数学問題管理・生成システム
@@ -12,7 +8,7 @@ AIを活用した数学問題管理・生成システム
 - AI試験生成
 - 弱点分析
 
-[こちらからアクセス](https://ryuya-urata.github.io/math-problems/)" > README.md
+[こちらからアクセス](https://ryuya-urata.github.io/math-problems/math_exam_generator_v5.html)" > README.md
 
 # 3. GitHubにプッシュ
 git add .
