@@ -1,0 +1,490 @@
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.app { padding: 1rem 0; max-width: 760px; font-family: var(--font-sans); }
+.config-card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem; margin-bottom: 1rem;
+}
+.section-label {
+  font-size: 12px; font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+.divider { height: 0.5px; background: var(--color-border-tertiary); margin: 14px 0; }
+
+/* レベル選択 */
+.level-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 8px; margin-bottom: 10px;
+}
+.level-card {
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 10px 8px; text-align: center;
+  cursor: pointer; transition: all 0.15s;
+  background: var(--color-background-primary);
+}
+.level-card:hover { background: var(--color-background-secondary); }
+.level-card.on { border-color: #85B7EB; background: #E6F1FB; }
+.level-card-icon { font-size: 16px; margin-bottom: 4px; }
+.level-card-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+.level-card.on .level-card-name { color: #185FA5; }
+.level-card-range { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+.level-card.on .level-card-range { color: #378ADD; }
+
+/* サブレベル */
+.sublevel-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 6px; margin-bottom: 0;
+}
+.sublevel-btn {
+  padding: 8px 6px; text-align: center;
+  border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-secondary);
+  font-size: 13px; cursor: pointer;
+  background: var(--color-background-primary);
+  color: var(--color-text-secondary);
+  transition: all 0.15s; font-family: var(--font-sans);
+}
+.sublevel-btn:hover { background: var(--color-background-secondary); }
+.sublevel-btn.easy.on  { background: #EAF3DE; color: #27500A; border-color: #97C459; }
+.sublevel-btn.std.on   { background: #FAEEDA; color: #633806; border-color: #EF9F27; }
+.sublevel-btn.hard.on  { background: #FCEBEB; color: #501313; border-color: #F09595; }
+.sublevel-label { font-weight: 500; display: block; margin-bottom: 2px; }
+.sublevel-desc { font-size: 11px; opacity: 0.8; }
+
+/* 難易度サマリ */
+.diff-summary {
+  margin-top: 10px; padding: 8px 12px;
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-md);
+  font-size: 13px; color: var(--color-text-secondary);
+}
+.diff-summary strong { color: var(--color-text-primary); font-weight: 500; }
+.diff-badge {
+  display: inline-block; padding: 2px 10px;
+  border-radius: 20px; font-size: 12px; font-weight: 500;
+  margin-left: 6px; vertical-align: middle;
+}
+.badge-easy { background: #EAF3DE; color: #27500A; }
+.badge-std  { background: #FAEEDA; color: #633806; }
+.badge-hard { background: #FCEBEB; color: #501313; }
+
+/* 問題形式 */
+.fmt-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 8px; margin-bottom: 0;
+}
+.fmt-card {
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 10px 12px; cursor: pointer;
+  transition: all 0.15s; background: var(--color-background-primary);
+}
+.fmt-card:hover { background: var(--color-background-secondary); }
+.fmt-card.on { background: #E6F1FB; border-color: #85B7EB; }
+.fmt-card-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; }
+.fmt-card.on .fmt-card-title { color: #185FA5; }
+.fmt-card-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+.fmt-card.on .fmt-card-desc { color: #378ADD; }
+
+.drill-opts {
+  margin-top: 10px; padding: 10px 12px;
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-md); display: none;
+}
+.drill-opts.show { display: block; }
+.drill-opts-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+.chip-group { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.chip {
+  padding: 5px 12px; border-radius: 20px;
+  border: 0.5px solid var(--color-border-secondary);
+  font-size: 13px; color: var(--color-text-secondary);
+  cursor: pointer; background: var(--color-background-primary);
+  transition: all 0.15s; user-select: none;
+}
+.chip.on { background: #E6F1FB; color: #185FA5; border-color: #85B7EB; }
+
+.slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.slider-row input[type=range] { flex: 1; }
+.slider-val { font-size: 15px; font-weight: 500; min-width: 70px; color: var(--color-text-primary); text-align: right; }
+.auto-badge-green {
+  display: inline-block; padding: 2px 8px;
+  border-radius: 20px; font-size: 11px;
+  background: #EAF3DE; color: #27500A; margin-left: 6px;
+}
+.qmode-row { display: flex; gap: 8px; }
+.qmode-btn {
+  flex: 1; padding: 7px; border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-secondary);
+  font-size: 13px; cursor: pointer; font-family: var(--font-sans);
+  text-align: center; transition: all 0.15s;
+}
+.qmode-btn.on { background: #E6F1FB; color: #185FA5; border-color: #85B7EB; }
+
+.summary-bar {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 10px 12px; background: var(--color-background-secondary);
+  border-radius: var(--border-radius-md);
+  margin-bottom: 14px; font-size: 13px;
+}
+.summary-item { color: var(--color-text-secondary); }
+.summary-item strong { color: var(--color-text-primary); font-weight: 500; }
+.summary-sep { color: var(--color-border-secondary); }
+
+.gen-btn {
+  width: 100%; padding: 12px; border-radius: var(--border-radius-md);
+  border: none; background: #185FA5; color: #E6F1FB;
+  font-size: 15px; font-weight: 500; cursor: pointer;
+  font-family: var(--font-sans); transition: opacity 0.15s; margin-bottom: 1rem;
+}
+.gen-btn:hover { opacity: 0.88; }
+.info-card {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-lg); padding: 1.25rem;
+  font-size: 14px; color: var(--color-text-secondary); line-height: 1.7;
+}
+.step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.step-num {
+  width: 22px; height: 22px; flex-shrink: 0; border-radius: 50%;
+  background: #E6F1FB; color: #185FA5; font-size: 12px; font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+}
+.prompt-box {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md); padding: 1rem; margin-top: 1rem;
+  font-size: 13px; font-family: var(--font-mono);
+  color: var(--color-text-secondary); white-space: pre-wrap;
+  word-break: break-all; display: none;
+}
+.copy-btn {
+  margin-top: 8px; padding: 6px 14px; border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary); color: var(--color-text-secondary);
+  font-size: 13px; cursor: pointer; font-family: var(--font-sans); display: none;
+}
+.copy-btn:hover { background: var(--color-background-secondary); }
+</style>
+
+<div class="app">
+  <div class="config-card">
+
+    <!-- 学校段階 -->
+    <div class="section-label">学校段階</div>
+    <div class="level-grid">
+      <div class="level-card on" data-lv="小学生" onclick="selectLevel(this)">
+        <div class="level-card-icon">🏫</div>
+        <div class="level-card-name">小学生</div>
+        <div class="level-card-range">算数</div>
+      </div>
+      <div class="level-card" data-lv="中学生" onclick="selectLevel(this)">
+        <div class="level-card-icon">📐</div>
+        <div class="level-card-name">中学生</div>
+        <div class="level-card-range">中学数学</div>
+      </div>
+      <div class="level-card" data-lv="高校生" onclick="selectLevel(this)">
+        <div class="level-card-icon">📊</div>
+        <div class="level-card-name">高校生</div>
+        <div class="level-card-range">高校数学</div>
+      </div>
+      <div class="level-card" data-lv="大学生" onclick="selectLevel(this)">
+        <div class="level-card-icon">🎓</div>
+        <div class="level-card-name">大学生</div>
+        <div class="level-card-range">大学数学</div>
+      </div>
+    </div>
+
+    <!-- サブレベル -->
+    <div class="sublevel-row">
+      <button class="sublevel-btn easy on" onclick="selectSub(this,'easy')">
+        <span class="sublevel-label">基礎</span>
+        <span class="sublevel-desc">典型問題・基本操作</span>
+      </button>
+      <button class="sublevel-btn std" onclick="selectSub(this,'std')">
+        <span class="sublevel-label">標準</span>
+        <span class="sublevel-desc">入試頻出・応用問題</span>
+      </button>
+      <button class="sublevel-btn hard" onclick="selectSub(this,'hard')">
+        <span class="sublevel-label">難問</span>
+        <span class="sublevel-desc">難関校・思考力問題</span>
+      </button>
+    </div>
+
+    <div class="diff-summary" id="diffSummary">
+      難易度：<strong id="diffText">小学生 — 基礎レベル</strong>
+      <span class="diff-badge badge-easy" id="diffBadge">基礎</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 問題形式 -->
+    <div class="section-label">問題形式</div>
+    <div class="fmt-grid">
+      <div class="fmt-card on" data-fmt="選択式（4択）" onclick="selectFmt(this)">
+        <div class="fmt-card-title">選択式（4択）</div>
+        <div class="fmt-card-desc">4つの選択肢から正解を選ぶ</div>
+      </div>
+      <div class="fmt-card" data-fmt="記述式" onclick="selectFmt(this)">
+        <div class="fmt-card-title">記述式</div>
+        <div class="fmt-card-desc">式や過程を記述して解答する</div>
+      </div>
+      <div class="fmt-card" data-fmt="混合（選択式と記述式）" onclick="selectFmt(this)">
+        <div class="fmt-card-title">混合</div>
+        <div class="fmt-card-desc">選択式と記述式を組み合わせる</div>
+      </div>
+      <div class="fmt-card" data-fmt="計算ドリル" onclick="selectFmt(this)">
+        <div class="fmt-card-title">計算ドリル</div>
+        <div class="fmt-card-desc">答えだけを求める反復練習問題</div>
+      </div>
+    </div>
+    <div class="drill-opts" id="drillOpts">
+      <div class="drill-opts-label">ドリルの種類</div>
+      <div class="chip-group" id="drillTypes" style="margin-bottom:0;">
+        <span class="chip on" data-v="四則演算">四則演算</span>
+        <span class="chip on" data-v="因数分解">因数分解</span>
+        <span class="chip" data-v="展開">展開</span>
+        <span class="chip" data-v="方程式を解く">方程式</span>
+        <span class="chip" data-v="微分">微分</span>
+        <span class="chip" data-v="積分">積分</span>
+        <span class="chip" data-v="行列の計算">行列計算</span>
+        <span class="chip" data-v="三角関数の値">三角関数値</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 分野 -->
+    <div class="section-label">分野（複数選択可）</div>
+    <div class="chip-group" id="topics">
+      <span class="chip on" data-v="代数・方程式">代数・方程式</span>
+      <span class="chip on" data-v="関数・グラフ">関数・グラフ</span>
+      <span class="chip" data-v="図形・幾何">図形・幾何</span>
+      <span class="chip" data-v="確率・統計">確率・統計</span>
+      <span class="chip" data-v="微分・積分">微分・積分</span>
+      <span class="chip" data-v="数列・級数">数列・級数</span>
+      <span class="chip" data-v="ベクトル・行列">ベクトル・行列</span>
+      <span class="chip" data-v="三角関数">三角関数</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 制限時間 -->
+    <div class="section-label">制限時間</div>
+    <div class="slider-row" style="margin-bottom:14px;">
+      <input type="range" id="timeRange" min="5" max="120" step="5" value="30">
+      <span class="slider-val" id="timeVal">30分</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 問題数 -->
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+      <div class="section-label" style="margin-bottom:0;">問題数</div>
+      <div class="qmode-row" style="gap:6px; flex:0 0 auto;">
+        <div class="qmode-btn on" id="modeAuto" onclick="setMode('auto')">自動</div>
+        <div class="qmode-btn" id="modeManual" onclick="setMode('manual')">手動</div>
+      </div>
+    </div>
+    <div id="autoRow" class="slider-row">
+      <input type="range" disabled id="autoSlider" min="1" max="50" value="6" style="flex:1;opacity:0.5;">
+      <span class="slider-val" id="autoVal">6問 <span class="auto-badge-green">自動</span></span>
+    </div>
+    <div id="manualRow" class="slider-row" style="display:none;">
+      <input type="range" id="manualSlider" min="1" max="50" step="1" value="6" style="flex:1;">
+      <span class="slider-val" id="manualVal">6問</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- サマリ -->
+    <div class="summary-bar">
+      <span class="summary-item"><strong id="s-diff">小学生・基礎</strong></span>
+      <span class="summary-sep">|</span>
+      <span class="summary-item"><strong id="s-fmt">選択式</strong></span>
+      <span class="summary-sep">|</span>
+      <span class="summary-item">分野 <strong id="s-topics">2</strong> 種</span>
+      <span class="summary-sep">|</span>
+      <span class="summary-item"><strong id="s-time">30</strong>分</span>
+      <span class="summary-sep">|</span>
+      <span class="summary-item"><strong id="s-q">6</strong>問</span>
+    </div>
+  </div>
+
+  <button class="gen-btn" onclick="generate()">試験問題を生成する ↗</button>
+
+  <div class="info-card">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>設定を選んで<strong>「試験問題を生成する」</strong>を押すと、Claudeに依頼が送信されます</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>Claudeが設定に合わせた<strong>問題・解答・解説</strong>を作成します</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>「もっと難しく」「この問題を解説して」など<strong>チャットで続けて</strong>やり取りできます</div>
+    </div>
+    <div class="prompt-box" id="promptBox"></div>
+    <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">コピー</button>
+  </div>
+</div>
+
+<script>
+let qmode = 'auto';
+let selectedFmt = '選択式（4択）';
+let selectedLevel = '小学生';
+let selectedSub = 'easy';
+
+const subLabels = { easy: '基礎', std: '標準', hard: '難問' };
+const subBadgeClass = { easy: 'badge-easy', std: 'badge-std', hard: 'badge-hard' };
+const subDescriptions = {
+  easy:  '典型問題・基本操作に特化した問題',
+  std:   '入試頻出・応用力を問う問題',
+  hard:  '難関校レベル・高度な思考力を要する問題'
+};
+
+document.querySelectorAll('.chip').forEach(c => {
+  c.addEventListener('click', () => { c.classList.toggle('on'); updateSummary(); });
+});
+
+function selectLevel(el) {
+  document.querySelectorAll('.level-card').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  selectedLevel = el.dataset.lv;
+  updateDiffSummary();
+  updateSummary();
+}
+
+function selectSub(el, key) {
+  document.querySelectorAll('.sublevel-btn').forEach(b => b.classList.remove('on'));
+  el.classList.add('on');
+  selectedSub = key;
+  updateDiffSummary();
+  updateSummary();
+}
+
+function updateDiffSummary() {
+  const label = subLabels[selectedSub];
+  document.getElementById('diffText').textContent = `${selectedLevel} — ${label}レベル`;
+  const badge = document.getElementById('diffBadge');
+  badge.textContent = label;
+  badge.className = 'diff-badge ' + subBadgeClass[selectedSub];
+}
+
+function selectFmt(el) {
+  document.querySelectorAll('.fmt-card').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  selectedFmt = el.dataset.fmt;
+  document.getElementById('drillOpts').classList.toggle('show', selectedFmt === '計算ドリル');
+  if (qmode === 'auto') updateAutoCount();
+  updateSummary();
+}
+
+const timeRange = document.getElementById('timeRange');
+const timeVal = document.getElementById('timeVal');
+timeRange.addEventListener('input', () => {
+  timeVal.textContent = timeRange.value + '分';
+  if (qmode === 'auto') updateAutoCount();
+  updateSummary();
+});
+
+const manualSlider = document.getElementById('manualSlider');
+const manualVal = document.getElementById('manualVal');
+manualSlider.addEventListener('input', () => {
+  manualVal.textContent = manualSlider.value + '問';
+  updateSummary();
+});
+
+function setMode(m) {
+  qmode = m;
+  document.getElementById('modeAuto').classList.toggle('on', m === 'auto');
+  document.getElementById('modeManual').classList.toggle('on', m === 'manual');
+  document.getElementById('autoRow').style.display = m === 'auto' ? 'flex' : 'none';
+  document.getElementById('manualRow').style.display = m === 'manual' ? 'flex' : 'none';
+  if (m === 'auto') updateAutoCount();
+  updateSummary();
+}
+
+function updateAutoCount() {
+  const min = parseInt(timeRange.value);
+  let q;
+  if (selectedFmt === '計算ドリル') {
+    q = min <= 10 ? 10 : min <= 20 ? 20 : min <= 30 ? 30 : min <= 60 ? 50 : 80;
+  } else {
+    q = min <= 10 ? 3 : min <= 20 ? 5 : min <= 30 ? 6 : min <= 45 ? 8 : min <= 60 ? 10 : min <= 90 ? 13 : 16;
+  }
+  q = Math.min(q, 50);
+  document.getElementById('autoSlider').value = q;
+  document.getElementById('autoVal').innerHTML = q + '問 <span class="auto-badge-green">自動</span>';
+  return q;
+}
+
+function getQCount() {
+  return qmode === 'auto' ? updateAutoCount() : parseInt(manualSlider.value);
+}
+
+function updateSummary() {
+  const topics = document.querySelectorAll('#topics .chip.on').length;
+  document.getElementById('s-diff').textContent = `${selectedLevel}・${subLabels[selectedSub]}`;
+  document.getElementById('s-fmt').textContent = selectedFmt === '混合（選択式と記述式）' ? '混合' : selectedFmt;
+  document.getElementById('s-topics').textContent = topics;
+  document.getElementById('s-time').textContent = timeRange.value;
+  document.getElementById('s-q').textContent = getQCount();
+}
+
+updateAutoCount();
+updateSummary();
+
+let lastPrompt = '';
+
+function generate() {
+  const topics = [...document.querySelectorAll('#topics .chip.on')].map(c => c.dataset.v);
+  if (!topics.length) { alert('分野を1つ以上選択してください'); return; }
+
+  const minutes = parseInt(timeRange.value);
+  const qCount = getQCount();
+  const subLabel = subLabels[selectedSub];
+  const subDesc = subDescriptions[selectedSub];
+
+  let drillLine = '';
+  if (selectedFmt === '計算ドリル') {
+    const types = [...document.querySelectorAll('#drillTypes .chip.on')].map(c => c.dataset.v);
+    if (types.length) drillLine = `\nドリル種類: ${types.join('、')}`;
+  }
+
+  const fmtDesc = selectedFmt === '計算ドリル'
+    ? '計算ドリル形式（答えだけを求める短問を多数。式変形・計算過程は不要、答えのみ記入する形式）'
+    : selectedFmt;
+
+  lastPrompt = `【数学試験問題の作成依頼】
+学校段階: ${selectedLevel}
+難易度レベル: ${subLabel}（${subDesc}）
+分野: ${topics.join('、')}
+問題形式: ${fmtDesc}${drillLine}
+制限時間: ${minutes}分
+問題数: ${qCount}問
+
+上記の条件で試験問題を作成してください。各問題に解答・解説も付けてください。`;
+
+  document.getElementById('promptBox').textContent = lastPrompt;
+  document.getElementById('promptBox').style.display = 'block';
+  document.getElementById('copyBtn').style.display = 'inline-block';
+  sendPrompt(lastPrompt);
+}
+
+function copyPrompt() {
+  navigator.clipboard.writeText(lastPrompt).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'コピーしました';
+    setTimeout(() => { btn.textContent = 'コピー'; }, 2000);
+  });
+}
+</script>
