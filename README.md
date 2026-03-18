@@ -8,7 +8,7 @@ AIを活用した数学問題管理・生成システム
 - AI試験生成
 - 弱点分析
 
-[こちらからアクセス](https://ryuya-urata.github.io/math-problems/math_exam_generator_v5.html)" > README.md
+[こちらからアクセス](https://ryuya-urata.github.io/math-problems/math_exam_generator_v5.html)" > math-problem-generator.md
 
 # 3. GitHubにプッシュ
 git add .
