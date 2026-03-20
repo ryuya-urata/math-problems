@@ -357,7 +357,9 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
     </div>
     <div style="display:grid; grid-template-columns: minmax(0, 1fr) 380px; gap:16px; width: 100%;">
       <div id="problemList" class="problem-list"></div>
-      <div id="detailPanel"><div class="empty-state"><div class="empty-icon">📋</div>問題を選択してください</div></div>
+      <div id="detailPanel" style="position: -webkit-sticky; position: sticky; top: 80px; align-self: start; max-height: calc(100vh - 110px); overflow-y: auto; padding-right: 4px;">
+  <div class="empty-state"><div class="empty-icon">📋</div>問題を選択してください</div>
+</div>
     </div>
   </div>
 
