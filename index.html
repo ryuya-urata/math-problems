@@ -232,6 +232,53 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
 .ans-result.ok  { background:rgba(76,175,125,0.15);color:var(--green); }
 .ans-result.ng  { background:rgba(224,92,92,0.15);color:var(--red); }
 
+/* TAG SYSTEM */
+.tag-input-wrap { display:flex; flex-wrap:wrap; gap:6px; padding:8px; background:var(--bg3); border:1px solid var(--border2); border-radius:6px; min-height:38px; cursor:text; }
+.tag-pill { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:20px; background:rgba(155,127,232,0.15); color:var(--purple); border:1px solid rgba(155,127,232,0.3); font-size:12px; }
+.tag-pill-del { cursor:pointer; opacity:0.6; font-size:11px; line-height:1; }
+.tag-pill-del:hover { opacity:1; }
+.tag-input-field { border:none; background:transparent; color:var(--text); font-family:var(--font-body); font-size:13px; outline:none; min-width:80px; flex:1; }
+.tag-suggest { position:relative; }
+.tag-suggest-list { position:absolute; top:100%; left:0; right:0; background:var(--bg2); border:1px solid var(--border2); border-radius:6px; z-index:50; max-height:140px; overflow-y:auto; display:none; }
+.tag-suggest-list.open { display:block; }
+.tag-suggest-item { padding:7px 12px; font-size:13px; color:var(--text2); cursor:pointer; }
+.tag-suggest-item:hover { background:var(--bg3); color:var(--text); }
+.similar-panel { margin-top:14px; }
+.similar-loading { display:flex; align-items:center; gap:10px; padding:14px; font-size:13px; color:var(--text3); }
+.similar-spinner { width:16px; height:16px; border:2px solid var(--border2); border-top-color:var(--purple); border-radius:50%; animation:spin .7s linear infinite; flex-shrink:0; }
+.similar-card { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:14px; margin-bottom:8px; }
+.similar-card:last-child { margin-bottom:0; }
+.similar-card-head { display:flex; align-items:center; gap:6px; margin-bottom:8px; }
+.similar-card-title { font-size:12px; color:var(--text2); font-weight:500; }
+.similar-diff { font-size:11px; padding:2px 8px; border-radius:20px; }
+.similar-diff.easy { background:rgba(76,175,125,0.12); color:var(--green); }
+.similar-diff.std  { background:rgba(212,168,67,0.12); color:var(--accent); }
+.similar-diff.hard { background:rgba(224,92,92,0.12); color:var(--red); }
+.similar-body { font-family:var(--font-serif); font-size:13px; color:var(--text); line-height:1.7; margin-bottom:8px; }
+.similar-answer { font-size:12px; color:var(--text3); font-family:var(--font-mono); }
+.prob-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
+.prob-tag { font-size:11px; padding:2px 7px; border-radius:20px; background:rgba(155,127,232,0.1); color:var(--purple); border:1px solid rgba(155,127,232,0.2); }
+
+/* GITHUB LOADER */
+.gh-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:14px; }
+.gh-header { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+.gh-icon { width:18px; height:18px; flex-shrink:0; opacity:0.7; }
+.gh-title { font-size:13px; font-weight:500; color:var(--text2); }
+.gh-input-row { display:flex; gap:8px; margin-bottom:8px; }
+.gh-input-row .form-input { flex:1; font-size:13px; }
+.gh-sources { display:flex; flex-direction:column; gap:6px; }
+.gh-source-row { display:flex; align-items:center; gap:8px; padding:8px 10px; background:var(--bg3); border-radius:6px; border:1px solid var(--border); }
+.gh-source-info { flex:1; min-width:0; }
+.gh-source-name { font-size:12px; font-weight:500; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.gh-source-url  { font-size:11px; color:var(--text3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-family:var(--font-mono); }
+.gh-source-badge { font-size:11px; padding:2px 8px; border-radius:20px; white-space:nowrap; flex-shrink:0; }
+.gh-badge-ok  { background:rgba(76,175,125,0.12); color:var(--green); border:1px solid rgba(76,175,125,0.25); }
+.gh-badge-ext { background:rgba(91,156,246,0.12); color:var(--blue); border:1px solid rgba(91,156,246,0.25); }
+.gh-badge-err { background:rgba(224,92,92,0.12); color:var(--red); border:1px solid rgba(224,92,92,0.25); }
+.gh-badge-load { background:rgba(155,127,232,0.12); color:var(--purple); border:1px solid rgba(155,127,232,0.25); }
+.gh-progress { font-size:12px; color:var(--text3); margin-top:6px; line-height:1.6; }
+.gh-ext-badge { font-size:10px; padding:1px 6px; border-radius:20px; background:rgba(91,156,246,0.12); color:var(--blue); border:1px solid rgba(91,156,246,0.2); vertical-align:middle; margin-left:4px; }
+
 </style>
 </head>
 <body>
@@ -240,12 +287,12 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
 <nav class="nav">
   <div class="nav-logo">数学問題 DB</div>
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showPage('dashboard')">ダッシュボード</button>
-    <button class="nav-tab" onclick="showPage('problems')">問題一覧</button>
-    <button class="nav-tab" onclick="showPage('generate')">試験生成</button>
-    <button class="nav-tab" onclick="showPage('weakness')">弱点分析</button>
-    <button class="nav-tab" onclick="showPage('register')">問題登録</button>
-    <button class="nav-tab" onclick="showPage('analytics')">分析</button>
+    <button class="nav-tab active" data-page="dashboard">ダッシュボード</button>
+    <button class="nav-tab" data-page="problems">問題一覧</button>
+    <button class="nav-tab" data-page="generate">試験生成</button>
+    <button class="nav-tab" data-page="weakness">弱点分析</button>
+    <button class="nav-tab" data-page="register">問題登録</button>
+    <button class="nav-tab" data-page="analytics">分析</button>
   </div>
   <div class="nav-right">
     <span id="userBadge" class="user-badge" onclick="openUserModal()">👤 ゲスト</span>
@@ -289,7 +336,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
   <!-- ===== PROBLEMS ===== -->
   <div class="page" id="page-problems">
     <div style="display:flex; gap:10px; margin-bottom:16px; align-items:center;">
-      <input class="form-input" id="searchInput" placeholder="問題を検索..." style="flex:1;" oninput="renderProblems()">
+      <input class="form-input" id="searchInput" placeholder="問題・タグを検索..." style="flex:1;" oninput="renderProblems()">
       <select class="form-select" id="filterField" style="width:140px;" onchange="renderProblems()">
         <option value="">すべての分野</option>
         <option>代数・方程式</option><option>関数・グラフ</option><option>図形・幾何</option>
@@ -356,6 +403,15 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
           <div class="time-input-wrap">
             <input class="time-input" id="reg-time" type="number" min="1" max="120" value="10">
             <span class="time-unit">分</span>
+          </div>
+        </div>
+        <div class="form-field full">
+          <label class="form-label">タグ（Enter または カンマで追加）</label>
+          <div class="tag-suggest">
+            <div class="tag-input-wrap" id="reg-tag-wrap" onclick="document.getElementById('reg-tag-input').focus()">
+              <input class="tag-input-field" id="reg-tag-input" placeholder="例：二次方程式、判別式..." maxlength="20">
+            </div>
+            <div class="tag-suggest-list" id="reg-tag-suggest"></div>
           </div>
         </div>
         <div class="form-field full">
@@ -431,6 +487,20 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
             <div id="gen-db-summary" style="font-size:12px;color:var(--text3);line-height:1.7;"></div>
           </div>
           <button class="btn btn-primary" style="width:100%;padding:11px;" onclick="generateExam()">試験問題を生成する ↗</button>
+        </div>
+
+        <!-- GitHub 読み込み欄 -->
+        <div class="gh-card">
+          <div class="gh-header">
+            <svg class="gh-icon" viewBox="0 0 24 24" fill="currentColor" style="color:var(--text2)"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span class="gh-title">GitHub から問題集を読み込む</span>
+          </div>
+          <div class="gh-input-row">
+            <input class="form-input" id="gh-url-input" placeholder="https://github.com/user/repo or raw URL" style="font-size:12px;">
+            <button class="btn btn-secondary" style="font-size:12px;padding:0 12px;white-space:nowrap;" onclick="loadFromGitHub()">読み込む</button>
+          </div>
+          <div id="gh-progress" class="gh-progress" style="display:none;"></div>
+          <div id="gh-sources" class="gh-sources"></div>
         </div>
       </div>
 
@@ -530,22 +600,24 @@ function load() {
   if (!state.answers)  state.answers  = [];
   if (!state.users)    state.users    = ['田中','鈴木','山田','ゲスト'];
   if (!state.currentUser) state.currentUser = 'ゲスト';
+  // Migrate old key
+  try { if (localStorage.getItem('mathdb_v2')) { localStorage.removeItem('mathdb_v2'); } } catch(e){}
 }
 
 /* ── SEED ── */
 const SEED_PROBLEMS = [
   {id:'P001',level:'高校生',sublevel:'難問',field:'微分・積分',type:'記述式',
    body:'定積分 ∫₀^π x·sin(x) dx を求めよ。',answer:'部分積分より π',
-   source:'東京大学 2019',regDiff:4,regTime:8,createdBy:'田中',createdAt:Date.now()-864e5*5},
+   source:'東京大学 2019',tags:['定積分','部分積分','三角関数'],regDiff:4,regTime:8,createdBy:'田中',createdAt:Date.now()-864e5*5},
   {id:'P002',level:'大学受験',sublevel:'標準',field:'数列・級数',type:'記述式',
    body:'a₁=1, aₙ₊₁ = aₙ/(1+n·aₙ) で定まる数列の一般項を求めよ。',answer:'aₙ = 2/(n²−n+2)',
-   source:'京都大学 2021',regDiff:4,regTime:12,createdBy:'鈴木',createdAt:Date.now()-864e5*3},
+   source:'京都大学 2021',tags:['漸化式','数列','一般項'],regDiff:4,regTime:12,createdBy:'鈴木',createdAt:Date.now()-864e5*3},
   {id:'P003',level:'大学受験',sublevel:'難問',field:'ベクトル・行列',type:'記述式',
    body:'行列 A=[[3,1],[-2,0]] について Aⁿ を求めよ。',answer:'対角化より導出',
-   source:'一橋大学 2022',regDiff:5,regTime:15,createdBy:'山田',createdAt:Date.now()-864e5*1},
+   source:'一橋大学 2022',tags:['行列','固有値','対角化'],regDiff:5,regTime:15,createdBy:'山田',createdAt:Date.now()-864e5*1},
   {id:'P004',level:'高校生',sublevel:'基礎',field:'三角関数',type:'選択式',
    body:'sin(π/6) の値はどれか。 A: 1/2  B: √2/2  C: √3/2  D: 1',answer:'A: 1/2',
-   source:'',regDiff:1,regTime:2,createdBy:'田中',createdAt:Date.now()-864e5*7},
+   source:'',tags:['三角比','sin','基礎'],regDiff:1,regTime:2,createdBy:'田中',createdAt:Date.now()-864e5*7},
   {id:'P005',level:'大学受験',sublevel:'難問',field:'代数・方程式',type:'記述式',
    body:'p,q を整数とする。方程式 x³+px+q=0 が有理数解をもつなら、それは整数であることを示せ。',
    answer:'有理根定理による証明',source:'東京大学 2020',regDiff:5,regTime:20,
@@ -577,10 +649,8 @@ function showPage(p) {
   document.querySelectorAll('.nav-tab').forEach(function(el){ el.classList.remove('active'); });
   var pg = document.getElementById('page-' + p);
   if (pg) pg.classList.add('active');
-  var labels = {dashboard:'ダッシュ',problems:'問題一覧',generate:'試験生成',weakness:'弱点分析',register:'問題登録',analytics:'分析'};
-  var key = labels[p] || '__';
   document.querySelectorAll('.nav-tab').forEach(function(el){
-    if (el.textContent.indexOf(key) >= 0) el.classList.add('active');
+    if (el.getAttribute('data-page') === p) el.classList.add('active');
   });
   if (p === 'dashboard') renderDashboard();
   if (p === 'problems')  renderProblems();
@@ -655,15 +725,17 @@ function probRowHTML(prob) {
   var n  = agg ? agg.n : 0;
   var sc = {難問:'hard',標準:'std',基礎:'easy'}[prob.sublevel] || 'std';
   var sel = selectedProbId === prob.id ? ' selected' : '';
+  var extBadge = prob.fromGitHub ? '<span class="gh-ext-badge">GH</span>' : '';
   return '<div class="problem-row' + sel + '" onclick="selectProblem(\'' + prob.id + '\')">' +
     '<span class="prob-id">' + prob.id + '</span>' +
     '<div class="prob-main">' +
-      '<div class="prob-title">' + prob.body.slice(0,60) + (prob.body.length>60?'…':'') + '</div>' +
+      '<div class="prob-title">' + prob.body.slice(0,60) + (prob.body.length>60?'…':'') + extBadge + '</div>' +
       '<div class="prob-meta">' +
         '<span class="tag tag-field">'  + prob.field    + '</span>' +
         '<span class="tag tag-level">'  + prob.level    + '</span>' +
         '<span class="tag tag-' + sc + '">' + prob.sublevel + '</span>' +
       '</div>' +
+      (prob.tags && prob.tags.length ? '<div class="prob-tags">' + prob.tags.map(function(t){ return '<span class="prob-tag">' + t + '</span>'; }).join('') + '</div>' : '') +
     '</div>' +
     '<div class="prob-scores">' +
       '<div class="score-bar-wrap"><span>難易度</span><div class="score-bar"><div class="score-fill diff" style="width:' + (bd/5*100) + '%"></div></div><span>' + bd.toFixed(1) + '</span></div>' +
@@ -681,7 +753,7 @@ function renderProblems() {
   var list  = state.problems.filter(function(p){
     if (field && p.field !== field) return false;
     if (level && p.level !== level) return false;
-    if (q && p.body.toLowerCase().indexOf(q) < 0 && p.field.toLowerCase().indexOf(q) < 0) return false;
+    if (q) { var inBody=p.body.toLowerCase().indexOf(q)>=0; var inField=p.field.toLowerCase().indexOf(q)>=0; var inTags=p.tags&&p.tags.some(function(t){return t.toLowerCase().indexOf(q)>=0;}); if(!inBody&&!inField&&!inTags) return false; }
     return true;
   });
   document.getElementById('problemList').innerHTML = list.length
@@ -761,6 +833,7 @@ function renderDetail(id) {
   }
 
   var sourceTag = prob.source ? '<span class="tag" style="background:rgba(255,255,255,0.05);color:var(--text3)">' + prob.source + '</span>' : '';
+  var tagsHtml = (prob.tags && prob.tags.length) ? prob.tags.map(function(t){ return '<span class="prob-tag">' + t + '</span>'; }).join('') : '';
   document.getElementById('detailPanel').innerHTML =
     '<div class="detail-panel">' +
       '<div class="detail-tags">' +
@@ -770,12 +843,22 @@ function renderDetail(id) {
         '<span class="tag tag-field">' + prob.type     + '</span>' +
         sourceTag +
       '</div>' +
+      (tagsHtml ? '<div class="prob-tags" style="margin-bottom:10px;">' + tagsHtml + '</div>' : '') +
       '<div class="detail-body">' + prob.body + '</div>' +
       '<details style="margin-bottom:16px;"><summary style="font-size:12px;color:var(--text3);cursor:pointer;padding:6px 0;">解答・解説を表示</summary>' +
         '<div class="detail-answer" style="margin-top:8px;">' + prob.answer + '</div></details>' +
       aggHtml +
       '<div class="ai-block" style="margin:16px 0;"><div class="ai-label"><div class="ai-dot"></div>AI フィードバック</div>' + aiFb + '</div>' +
       ratingHtml +
+      '<div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">' +
+          '<div class="section-label" style="margin-bottom:0;">AI 類題提案</div>' +
+          '<button class="btn btn-secondary" style="font-size:12px;padding:5px 12px;" onclick="fetchSimilar(' + JSON.stringify(id) + ')">類題を生成する</button>' +
+        '</div>' +
+        '<div class="similar-panel" id="similar-panel-' + id + '">' +
+          '<div style="font-size:12px;color:var(--text3);">「類題を生成する」を押すと、この問題の類題をAIが生成します。</div>' +
+        '</div>' +
+      '</div>' +
     '</div>';
 }
 
@@ -831,6 +914,7 @@ function registerProblem() {
     field:    document.getElementById('reg-field').value,
     type:     document.getElementById('reg-type').value,
     body:body, answer:answer,
+    tags:     currentTags.slice(),
     source:   document.getElementById('reg-source').value.trim(),
     regDiff:  state.regStars, regTime:time,
     createdBy:state.currentUser, createdAt:Date.now()
@@ -845,6 +929,8 @@ function clearForm() {
   });
   document.getElementById('reg-time').value = 10;
   state.regStars = 3; initRegStars();
+  currentTags = [];
+  renderTagPills();
 }
 
 /* ── ANALYTICS ── */
@@ -1303,15 +1389,323 @@ function renderReviewResult(exam) {
     '</div>';
 }
 
+
+/* ── TAG INPUT SYSTEM ── */
+var currentTags = [];
+var ALL_TAGS = [
+  '二次方程式','判別式','因数分解','有理根','整数問題','証明',
+  '定積分','不定積分','部分積分','置換積分','面積','体積',
+  '漸化式','数列','一般項','等差','等比','極限',
+  '行列','固有値','対角化','固有ベクトル','逆行列',
+  '三角比','sin','cos','tan','加法定理','三角関数',
+  '微分','導関数','極値','増減表','接線',
+  '確率','条件付き確率','期待値','分散','正規分布',
+  'ベクトル','内積','外積','直線','平面',
+  '複素数','ド・モアブル','回転','極形式',
+  '対数','指数','底変換','自然対数',
+  '二項定理','組み合わせ','順列','重複',
+  '放物線','双曲線','楕円','円','二次曲線'
+];
+
+function renderTagPills() {
+  var wrap = document.getElementById('reg-tag-wrap');
+  if (!wrap) return;
+  var input = document.getElementById('reg-tag-input');
+  if (!input) return;
+  wrap.innerHTML = '';
+  currentTags.forEach(function(tag, i) {
+    var pill = document.createElement('span');
+    pill.className = 'tag-pill';
+    pill.innerHTML = tag + '<span class="tag-pill-del" onclick="removeTag(' + i + ')">x</span>';
+    wrap.appendChild(pill);
+  });
+  wrap.appendChild(input);
+}
+
+function removeTag(i) { currentTags.splice(i, 1); renderTagPills(); }
+
+function addTag(val) {
+  var t = val.trim();
+  if (t && currentTags.indexOf(t) < 0 && currentTags.length < 8) {
+    currentTags.push(t);
+    renderTagPills();
+  }
+}
+
+function initTagInput() {
+  var input = document.getElementById('reg-tag-input');
+  var suggest = document.getElementById('reg-tag-suggest');
+  if (!input || !suggest) return;
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      addTag(input.value);
+      input.value = '';
+      suggest.classList.remove('open');
+    } else if (e.key === 'Backspace' && !input.value && currentTags.length) {
+      currentTags.pop(); renderTagPills();
+    }
+  });
+  input.addEventListener('input', function() {
+    var q = input.value.trim().toLowerCase();
+    if (!q) { suggest.classList.remove('open'); return; }
+    var matches = ALL_TAGS.filter(function(t) {
+      return t.toLowerCase().indexOf(q) >= 0 && currentTags.indexOf(t) < 0;
+    }).slice(0, 6);
+    if (!matches.length) { suggest.classList.remove('open'); return; }
+    suggest.innerHTML = matches.map(function(t) {
+      return '<div class="tag-suggest-item" onclick="(function(){addTag(\'' + t + '\');var inp=document.getElementById(\'reg-tag-input\');if(inp)inp.value=\'\';document.getElementById(\'reg-tag-suggest\').classList.remove(\'open\');})()">' + t + '</div>';
+    }).join('');
+    suggest.classList.add('open');
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest || !e.target.closest('.tag-suggest')) {
+      suggest.classList.remove('open');
+    }
+  });
+}
+
+/* ── SIMILAR PROBLEMS ── */
+async function fetchSimilar(probId) {
+  var prob = state.problems.find(function(p) { return p.id === probId; });
+  if (!prob) return;
+  var panel = document.getElementById('similar-panel-' + probId);
+  if (!panel) return;
+  panel.innerHTML = '<div class="similar-loading"><div class="similar-spinner"></div>AIが類題を生成中...</div>';
+  var agg = getAgg(probId);
+  var diffInfo = agg
+    ? '実測難易度: ' + agg.blendedDiff.toFixed(1) + '/5、平均所要時間: ' + agg.blendedTime.toFixed(0) + '分'
+    : '登録難易度: ' + prob.regDiff + '/5、想定時間: ' + prob.regTime + '分';
+  var tagsStr = (prob.tags && prob.tags.length) ? prob.tags.join('、') : 'なし';
+  var prompt = 'あなたは数学の問題作成の専門家です。以下の問題の類題を3問生成してください。\n\n'
+    + '元の問題: ' + prob.body + '\n'
+    + '分野: ' + prob.field + ' / ' + prob.level + ' / ' + prob.sublevel + '\n'
+    + 'タグ: ' + tagsStr + '\n'
+    + diffInfo + '\n\n'
+    + '条件: 同じ分野・タグの概念を使い、難易度を段階的に変える（易しめ・同程度・難しめ）。単純な数値変更でなく思考の角度が異なる問題にする。\n\n'
+    + '以下のJSON形式のみで返答してください:\n'
+    + '{"similar":[{"no":1,"difficulty":"易しめ","body":"問題文","answer":"解答","hint":"解法ポイント"},{"no":2,"difficulty":"同程度","body":"問題文","answer":"解答","hint":"解法ポイント"},{"no":3,"difficulty":"難しめ","body":"問題文","answer":"解答","hint":"解法ポイント"}]}';
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 2000, messages: [{ role: 'user', content: prompt }] })
+    });
+    var data = await res.json();
+    var raw = (data.content || []).map(function(b) { return b.text || ''; }).join('');
+    var clean = raw.replace(/```json|```/g, '').trim();
+    var result;
+    try { result = JSON.parse(clean); } catch(e2) {
+      panel.innerHTML = '<div style="font-size:12px;color:var(--text3);padding:10px;">生成に失敗しました。再度お試しください。</div>';
+      return;
+    }
+    renderSimilar(panel, result.similar || [], prob);
+  } catch(e) {
+    panel.innerHTML = '<div style="font-size:12px;color:var(--red);padding:10px;">エラー: ' + e.message + '</div>';
+  }
+}
+
+function renderSimilar(panel, items, origProb) {
+  var diffMap = { '易しめ': 'easy', '同程度': 'std', '難しめ': 'hard' };
+  var html = items.map(function(item, idx) {
+    var dc = diffMap[item.difficulty] || 'std';
+    var safeItem = JSON.stringify(item);
+    return '<div class="similar-card">'
+      + '<div class="similar-card-head"><span class="similar-card-title">類題 ' + (item.no || idx+1) + '</span>'
+      + '<span class="similar-diff ' + dc + '">' + (item.difficulty || '') + '</span></div>'
+      + '<div class="similar-body">' + item.body + '</div>'
+      + (item.hint ? '<div style="font-size:12px;color:var(--purple);margin-bottom:6px;padding:5px 8px;background:rgba(155,127,232,0.07);border-radius:5px;">ポイント: ' + item.hint + '</div>' : '')
+      + '<details><summary style="font-size:12px;color:var(--text3);cursor:pointer;">解答を見る</summary>'
+      + '<div class="similar-answer" style="margin-top:6px;">' + item.answer + '</div></details>'
+      + '<button class="btn btn-ghost" style="margin-top:8px;font-size:11px;padding:4px 10px;" onclick="addSimilarToDB(' + idx + ',\'' + origProb.id + '\')">DBに登録 +</button>'
+      + '</div>';
+  }).join('');
+  panel.innerHTML = html || '<div style="font-size:12px;color:var(--text3);">類題を生成できませんでした。</div>';
+  panel._items = items;
+  panel._orig  = origProb;
+}
+
+function addSimilarToDB(idx, origProbId) {
+  var panel = document.getElementById('similar-panel-' + origProbId);
+  if (!panel || !panel._items) return;
+  var item = panel._items[idx];
+  var orig = panel._orig;
+  if (!item || !orig) return;
+  var diffMap2 = { '易しめ': '基礎', '同程度': orig.sublevel, '難しめ': '難問' };
+  var diffNum  = { '易しめ': Math.max(1, orig.regDiff - 1), '同程度': orig.regDiff, '難しめ': Math.min(5, orig.regDiff + 1) };
+  var newProb = {
+    id: uid(), level: orig.level,
+    sublevel: diffMap2[item.difficulty] || orig.sublevel,
+    field: orig.field, type: orig.type,
+    body: item.body, answer: item.answer,
+    source: '類題(' + origProbId + 'より生成)',
+    tags: (orig.tags || []).slice(),
+    regDiff: diffNum[item.difficulty] || orig.regDiff,
+    regTime: orig.regTime,
+    createdBy: state.currentUser, createdAt: Date.now()
+  };
+  state.problems.push(newProb);
+  save();
+  toast('類題をDBに登録しました: ' + newProb.id, 'success');
+  renderProblems();
+}
+
+
+/* ── GITHUB LOADER ── */
+var ghSources = [];   // { url, name, count, status, loadedAt }
+
+function toRawUrl(input) {
+  var s = input.trim();
+  // 既にrawURLの場合
+  if (s.indexOf('raw.githubusercontent.com') >= 0) return s;
+  // jsDelivr
+  if (s.indexOf('cdn.jsdelivr.net') >= 0) return s;
+  // https://github.com/user/repo(/blob/branch/path.json)
+  var m = s.match(/github\.com\/([^/]+)\/([^/]+)(?:\/blob\/([^/]+)\/(.+))?/);
+  if (m) {
+    var user   = m[1];
+    var repo   = m[2];
+    var branch = m[3] || 'main';
+    var path   = m[4] || 'problems.json';
+    return 'https://raw.githubusercontent.com/' + user + '/' + repo + '/' + branch + '/' + path;
+  }
+  return s;
+}
+
+async function loadFromGitHub() {
+  var input = document.getElementById('gh-url-input');
+  if (!input) return;
+  var rawUrl = toRawUrl(input.value);
+  if (!rawUrl) { toast('URLを入力してください'); return; }
+
+  var prog = document.getElementById('gh-progress');
+  prog.style.display = 'block';
+  prog.textContent = rawUrl + ' を取得中...';
+
+  try {
+    var res = await fetch(rawUrl);
+    if (!res.ok) throw new Error('HTTP ' + res.status + ': ' + res.statusText);
+    var data = await res.json();
+
+    // 形式チェック
+    if (!data.problems || !Array.isArray(data.problems)) {
+      throw new Error('problems 配列が見つかりません。JSONの形式を確認してください。');
+    }
+
+    var meta    = data.meta || {};
+    var srcName = meta.title || rawUrl.split('/').slice(-3, -1).join('/');
+    var added   = 0;
+    var skipped = 0;
+
+    data.problems.forEach(function(p) {
+      var extId = 'GH-' + (p.id || (Date.now() + Math.random()).toString(36));
+      if (state.problems.find(function(x) { return x.id === extId; })) {
+        skipped++;
+        return;
+      }
+      state.problems.push({
+        id:        extId,
+        level:     p.level     || '高校生',
+        sublevel:  p.sublevel  || '標準',
+        field:     p.field     || '代数・方程式',
+        type:      p.type      || '記述式',
+        body:      p.body      || '',
+        answer:    p.answer    || '',
+        source:    p.source    || '',
+        tags:      p.tags      || [],
+        regDiff:   p.regDiff   || p.reg_diff   || 3,
+        regTime:   p.regTime   || p.reg_time   || 10,
+        createdBy: 'GitHub:' + (meta.author || 'unknown'),
+        createdAt: Date.now(),
+        fromGitHub: true,
+        githubRepo: rawUrl,
+        githubTitle: srcName
+      });
+      added++;
+    });
+
+    save();
+
+    // ソース一覧を更新
+    var existing = ghSources.find(function(s) { return s.url === rawUrl; });
+    if (existing) {
+      existing.count  += added;
+      existing.status  = 'ok';
+      existing.loadedAt = Date.now();
+    } else {
+      ghSources.push({ url: rawUrl, name: srcName, count: added, status: 'ok', loadedAt: Date.now() });
+    }
+
+    prog.textContent = added + '問を読み込みました。' + (skipped ? '（重複 ' + skipped + '件スキップ）' : '');
+    input.value = '';
+    renderGhSources();
+    renderProblems();
+    renderGenDBSummary();
+    toast(srcName + ' から ' + added + '問を読み込みました', 'success');
+
+  } catch(e) {
+    var errMsg = e.message || String(e);
+    // CORSエラーの場合は分かりやすく補足
+    if (errMsg.indexOf('Failed to fetch') >= 0 || errMsg.indexOf('CORS') >= 0) {
+      errMsg = 'CORS エラー: リポジトリが Private か、URL が正しくない可能性があります。';
+    }
+    prog.textContent = '読み込みエラー: ' + errMsg;
+    ghSources.push({ url: rawUrl, name: rawUrl, count: 0, status: 'error', error: errMsg, loadedAt: Date.now() });
+    renderGhSources();
+  }
+}
+
+function renderGhSources() {
+  var el = document.getElementById('gh-sources');
+  if (!el) return;
+  if (!ghSources.length) { el.innerHTML = ''; return; }
+
+  // 外部問題の総数をカウント
+  var totalExt = state.problems.filter(function(p) { return p.fromGitHub; }).length;
+
+  el.innerHTML = '<div style="font-size:11px;color:var(--text3);margin-bottom:6px;">読み込み済みソース（外部問題 計 ' + totalExt + '件）</div>'
+    + ghSources.map(function(src) {
+      var badgeCls  = src.status === 'ok' ? 'gh-badge-ok' : 'gh-badge-err';
+      var badgeTxt  = src.status === 'ok' ? src.count + '問' : 'エラー';
+      var timeStr   = src.loadedAt ? new Date(src.loadedAt).toLocaleTimeString('ja-JP', {hour:'2-digit',minute:'2-digit'}) : '';
+      return '<div class="gh-source-row">'
+        + '<div class="gh-source-info">'
+          + '<div class="gh-source-name">' + src.name + (timeStr ? '<span style="color:var(--text3);font-weight:400;font-size:11px;margin-left:6px;">' + timeStr + '</span>' : '') + '</div>'
+          + '<div class="gh-source-url">' + src.url + '</div>'
+          + (src.error ? '<div style="font-size:11px;color:var(--red);margin-top:2px;">' + src.error + '</div>' : '')
+        + '</div>'
+        + '<span class="gh-source-badge ' + badgeCls + '">' + badgeTxt + '</span>'
+        + '<button class="btn btn-ghost" style="font-size:11px;padding:3px 8px;" onclick="removeGhSource(\'' + src.url.replace(/'/g, "\\'") + '\')">削除</button>'
+      + '</div>';
+    }).join('');
+}
+
+function removeGhSource(url) {
+  // ソース一覧から削除
+  ghSources = ghSources.filter(function(s) { return s.url !== url; });
+  // その URL から読み込んだ問題をDBから削除
+  var before = state.problems.length;
+  state.problems = state.problems.filter(function(p) { return p.githubRepo !== url; });
+  var removed = before - state.problems.length;
+  save();
+  renderGhSources();
+  renderProblems();
+  renderGenDBSummary();
+  toast(removed + '件の外部問題を削除しました');
+}
+
+// 試験生成でGitHub問題を含めるかの設定
+var genIncludeGitHub = true;
+
 /* ── INIT ── */
 load();
 initSeed();
 initRegStars();
+initTagInput();
 renderDashboard();
 
-document.querySelectorAll('.nav-tab').forEach(function(el,i){
-  var pages = ['dashboard','problems','generate','weakness','register','analytics'];
-  el.onclick = function(){ showPage(pages[i]); };
+document.querySelectorAll('.nav-tab').forEach(function(el){
+  el.onclick = function(){ showPage(el.getAttribute('data-page')); };
 });
 
 document.querySelectorAll('#gen-fields .chip').forEach(function(c){
