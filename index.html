@@ -348,7 +348,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
         <option>小学生</option><option>中学生</option><option>高校生</option><option>大学受験</option><option>大学生</option>
       </select>
     </div>
-    <div style="display:grid; grid-template-columns:1fr 380px; gap:16px;">
+    <div style="display:grid; grid-template-columns: minmax(0, 1fr) 380px; gap:16px; width: 100%;">
       <div id="problemList" class="problem-list"></div>
       <div id="detailPanel"><div class="empty-state"><div class="empty-icon">📋</div>問題を選択してください</div></div>
     </div>
