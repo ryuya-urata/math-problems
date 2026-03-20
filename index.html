@@ -321,7 +321,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
   <!-- ===== DASHBOARD ===== -->
   <div class="page active" id="page-dashboard">
     <div class="stat-row" id="statRow"></div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+    <div style="display:grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap:14px; width: 100%;">
       <div>
         <div class="card-title">最近登録された問題</div>
         <div id="recentProblems" class="problem-list"></div>
