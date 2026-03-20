@@ -89,7 +89,14 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-body);
 .detail-body { background: var(--bg3); border-radius: 8px; padding: 16px; font-family: var(--font-serif); font-size: 14px; line-height: 1.9; color: var(--text); margin-bottom: 16px; }
 .detail-answer { background: rgba(76,175,125,0.06); border: 1px solid rgba(76,175,125,0.2); border-radius: 8px; padding: 14px; font-family: var(--font-mono); font-size: 13px; color: var(--green); margin-bottom: 16px; }
 .section-label { font-size: 12px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
-
+#detailPanel {
+  position: sticky;       /* 画面スクロールに追従して固定する */
+  top: 70px;              /* 上のナビゲーションバー(ヘッダー)に被らないよう70px空ける */
+  align-self: start;      /* 【重要】Gridの中で高さを引っ張られず、上端に揃える */
+  max-height: calc(100vh - 100px); /* パネルの最大高さを「画面の高さ - 100px」に制限 */
+  overflow-y: auto;       /* はみ出したコンテンツがある場合のみ、縦スクロールバーを出す */
+}
+  
 /* RATING WIDGET */
 .rating-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
 .rating-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
