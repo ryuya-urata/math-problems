@@ -1078,7 +1078,7 @@ async function generateExam() {
 
   document.getElementById('gen-result').innerHTML = '<div class="gen-loading"><div class="gen-spinner"></div><div class="gen-loading-text">AIが問題を生成中...</div><div style="font-size:11px;color:var(--text3);">DBフィードバックを反映しています</div></div>';
   try {
-    var res = await fetch('https://api.anthropic.com/v1/messages', {
+    var res = await fetch('your API', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}]})
     });
@@ -1333,7 +1333,7 @@ async function generateReviewTest() {
     '<div style="font-size:11px;color:var(--text3);">対象: ' + weakFields.join('・') + '</div></div>';
 
   try {
-    var res = await fetch('https://api.anthropic.com/v1/messages', {
+    var res = await fetch('your API', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}]})
     });
@@ -1486,7 +1486,7 @@ async function fetchSimilar(probId) {
     + '以下のJSON形式のみで返答してください:\n'
     + '{"similar":[{"no":1,"difficulty":"易しめ","body":"問題文","answer":"解答","hint":"解法ポイント"},{"no":2,"difficulty":"同程度","body":"問題文","answer":"解答","hint":"解法ポイント"},{"no":3,"difficulty":"難しめ","body":"問題文","answer":"解答","hint":"解法ポイント"}]}';
   try {
-    var res = await fetch('https://api.anthropic.com/v1/messages', {
+    var res = await fetch('your API', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 2000, messages: [{ role: 'user', content: prompt }] })
