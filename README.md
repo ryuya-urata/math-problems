@@ -1,4 +1,4 @@
-echo "# 数学問題データベース
+数学問題データベース
 
 AIを活用した数学問題管理・生成システム
 
@@ -10,7 +10,3 @@ AIを活用した数学問題管理・生成システム
 
 [こちらからアクセス](https://ryuya-urata.github.io/math-problems/index.html)" > math-problem-generator.md
 
-# 3. GitHubにプッシュ
-git add .
-git commit -m "Deploy app to GitHub Pages"
-git push origin main
